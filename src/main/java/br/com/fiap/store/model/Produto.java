@@ -84,6 +84,12 @@ public class Produto implements Serializable {
 		Produto other = (Produto) obj;
 		return codigo == other.codigo;
 	}
+
+	@Override
+	public String toString() {
+		return "Produto [codigo=" + codigo + ", nome=" + nome + ", valor=" + valor + ", dataFabricacao="
+				+ dataFabricacao + ", quantidade=" + quantidade + "]";
+	}
 	
 	
 	
