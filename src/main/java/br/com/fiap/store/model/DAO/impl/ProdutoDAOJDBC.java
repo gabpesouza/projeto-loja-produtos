@@ -1,7 +1,6 @@
 package br.com.fiap.store.model.DAO.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,16 +9,13 @@ import java.util.List;
 
 import br.com.fiap.store.model.Produto;
 import br.com.fiap.store.model.DAO.ProdutoDAO;
-import br.com.fiap.store.model.DB.DB;
+import br.com.fiap.store.model.DB.ConnectionManager;
 import br.com.fiap.store.model.DB.exceptions.DbException;
 
 public class ProdutoDAOJDBC implements ProdutoDAO {
 
 	private Connection con;
 	
-	public ProdutoDAOJDBC(Connection con) {
-		this.con = con;
-	}
 	
 	
 	@Override
@@ -27,6 +23,7 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 		PreparedStatement ps = null;
 		
 		try {
+			con = ConnectionManager.getInstance().getConnection();
 			ps = con.prepareStatement("INSERT INTO TB_PRODUTO (CD_PRODUTO, NM_PRODUTO, VL_PRODUTO, "
 					+ " DT_FABRICACAO, QT_PRODUTO) VALUES(SQ_TB_PRODUTO.NEXTVAL,?,?,?,?)");
 			
@@ -43,8 +40,8 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 			
 		}
 		finally {
-			DB.closeStatement(ps);
-			DB.closeConnection();
+			ConnectionManager.closeStatement(ps);
+		
 		}
 		
 	}
@@ -54,6 +51,7 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 		PreparedStatement ps = null;
 		
 		try {
+			con = ConnectionManager.getInstance().getConnection();
 			ps = con.prepareStatement("UPDATE TB_PRODUTO SET NM_PRODUTO = ?, VL_PRODUTO = ?, "
 					+ " DT_FABRICACAO = ?, QT_PRODUTO = ? WHERE CD_PRODUTO = ?");
 			
@@ -71,8 +69,8 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 			
 		}
 		finally {
-			DB.closeStatement(ps);
-			DB.closeConnection();
+			ConnectionManager.closeStatement(ps);
+		
 		}
 		
 		
@@ -84,6 +82,7 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 		PreparedStatement ps = null;
 		
 		try {
+			con = ConnectionManager.getInstance().getConnection();
 			ps = con.prepareStatement("DELETE * FROM TB_PRODUTO WHERE CD_PRODUTO = ?");
 			
 			ps.setInt(1, codigo);
@@ -95,8 +94,8 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 			
 		}
 		finally {
-			DB.closeStatement(ps);
-			DB.closeConnection();
+			ConnectionManager.closeStatement(ps);
+	
 		}
 		
 		
@@ -109,7 +108,7 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 		ResultSet rs = null;
 		
 		try {
-			
+			con = ConnectionManager.getInstance().getConnection();
 			ps = con.prepareStatement("SELECT * FROM TB_PRODUTO WHERE CD_PRODUTO = ?");
 			ps.setInt(1, codigo);
 			
@@ -132,9 +131,9 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 				
 			}
 			finally {
-				DB.closeStatement(ps);
-				DB.closeResultSet(rs);
-				DB.closeConnection();
+				ConnectionManager.closeStatement(ps);
+				ConnectionManager.closeResultSet(rs);
+			
 			}
 		return produto;
 			
@@ -151,7 +150,7 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 		ResultSet rs = null;
 	
 		try {
-			
+			con = ConnectionManager.getInstance().getConnection();
 			ps = con.prepareStatement("SELECT * FROM TB_PRODUTO");
 			rs = ps.executeQuery();
 			
@@ -174,9 +173,9 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 			
 		}
 		finally {
-			DB.closeStatement(ps);
-			DB.closeResultSet(rs);
-			DB.closeConnection();
+			ConnectionManager.closeStatement(ps);
+			ConnectionManager.closeResultSet(rs);
+		
 		}
 		
 		return produtos;
