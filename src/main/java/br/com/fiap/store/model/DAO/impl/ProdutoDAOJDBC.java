@@ -83,7 +83,7 @@ public class ProdutoDAOJDBC implements ProdutoDAO {
 		
 		try {
 			con = ConnectionManager.getInstance().getConnection();
-			ps = con.prepareStatement("DELETE * FROM TB_PRODUTO WHERE CD_PRODUTO = ?");
+			ps = con.prepareStatement("DELETE FROM TB_PRODUTO WHERE CD_PRODUTO = ?");
 			
 			ps.setInt(1, codigo);
 			ps.executeUpdate();

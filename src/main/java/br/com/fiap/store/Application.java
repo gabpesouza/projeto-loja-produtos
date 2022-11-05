@@ -1,6 +1,6 @@
 package br.com.fiap.store;
 
-import java.util.List;
+import java.util.Date;
 
 import br.com.fiap.store.model.Produto;
 import br.com.fiap.store.model.DAO.DAOFactory;
@@ -11,15 +11,22 @@ public class Application {
 	public static void main(String[] args) throws ClassNotFoundException {
 		
 		ProdutoDAO dao = DAOFactory.createProdutoDAO();
-//		Produto produto = new Produto(0, "Computador",8000 , new Date(), 1);
+		Produto produto = new Produto(1, "PS5",5000 , new Date(), 1);
 //		dao.cadastrar(produto);
 		
 //		Produto produtoBuscado = dao.buscar(1);
 //		System.out.println(produtoBuscado);
 		
-		List<Produto> lista = dao.listar();
-		for (Produto produto : lista) {
-			System.out.println(produto);
-		}
+//		List<Produto> lista = dao.listar();
+//		for (Produto produto : lista) {
+//			System.out.println(produto);
+//		}
+		
+//		Produto produtoBuscado = dao.buscar(1);
+//		System.out.println(produtoBuscado);
+		
+//		dao.atualizar(produto);
+		dao.remover(produto.getCodigo());
+		
 	}
 }

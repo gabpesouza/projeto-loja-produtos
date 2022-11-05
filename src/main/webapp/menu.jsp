@@ -24,7 +24,7 @@
           <a class="nav-link" href="cadastro-produto.jsp">Cadastro</a>
         </li>
          <li class="nav-item">
-          <a class="nav-link" href="produto">Produtos</a>
+          <a class="nav-link" href="produto?acao=listar">Produtos</a>
         </li>
        </ul>
        

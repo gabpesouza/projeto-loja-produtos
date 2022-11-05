@@ -28,6 +28,7 @@
 	
 	<form action="produto" method="post">
 	  <div class="mb-3">
+	  	<input type="hidden" name="acao" value="cadastrar">
 	    <label for="exampleInputEmail1" class="form-label">Nome produto</label>
 	    <input type="text" class="form-control" id="exampleInputEmail1" name="nome">
 	  </div>
