@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.fiap.store.model.Categoria;
 import br.com.fiap.store.model.Produto;
+import br.com.fiap.store.model.DAO.CategoriaDAO;
 import br.com.fiap.store.model.DAO.DAOFactory;
 import br.com.fiap.store.model.DAO.ProdutoDAO;
 
@@ -20,6 +22,7 @@ import br.com.fiap.store.model.DAO.ProdutoDAO;
 public class produtoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProdutoDAO dao;
+	private CategoriaDAO catDAO;
 	
 	
     
@@ -33,6 +36,7 @@ public class produtoServlet extends HttpServlet {
     public void init() throws ServletException {
     	super.init();
     	dao = DAOFactory.createProdutoDAO();
+    	catDAO = DAOFactory.createCategoriaDAO();
     }
  
 	
@@ -46,11 +50,15 @@ public class produtoServlet extends HttpServlet {
 			listar(req, resp);
 			break;
 		case "editar":
+			List<Categoria> categorias = catDAO.listar();
 			int codigo = Integer.parseInt(req.getParameter("codigo"));
 			Produto produto = dao.buscar(codigo);
 			req.setAttribute("produto", produto);
+			req.setAttribute("categorias", categorias);
 			req.getRequestDispatcher("alterarProduto.jsp").forward(req, resp);
-			
+			break;
+		case "abrir-form-cadastro":
+			abrirFormCadastro(req,resp);
 		}
 		
 		
@@ -89,12 +97,15 @@ public class produtoServlet extends HttpServlet {
 		double valor = Double.parseDouble(request.getParameter("valor"));
 		String data = request.getParameter("data");
 		int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+		int catCodigo = Integer.parseInt(request.getParameter("categoria"));
 		Date date = null;
-	
 		date = sdf.parse(data);
 		
-		Produto produto = new Produto(0,nome,valor,date,quantidade);
 		
+		Categoria cat = new Categoria();
+		cat.setCodigo(catCodigo);
+		Produto produto = new Produto(0,nome,valor,date,quantidade);
+		produto.setCategoria(cat);
 			
 		dao.cadastrar(produto);
 		request.setAttribute("msg", "Produto cadastrado!");
@@ -104,7 +115,7 @@ public class produtoServlet extends HttpServlet {
 		request.setAttribute("error", "Por favor valide os dados");
 		}
 		
-		request.getRequestDispatcher("cadastro-produto.jsp").forward(request, response);
+		abrirFormCadastro(request, response);
 	}
 	
 	private void editar (HttpServletRequest request, HttpServletResponse response)
@@ -118,11 +129,15 @@ public class produtoServlet extends HttpServlet {
 			double valor = Double.parseDouble(request.getParameter("valor"));
 			String data = request.getParameter("data");
 			int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+			int catCodigo = Integer.parseInt(request.getParameter("categoria"));
 			Date date = null;
-		
 			date = sdf.parse(data);
 			
+			Categoria cat = new Categoria();
+			cat.setCodigo(catCodigo);
+			
 			Produto produto = new Produto(codigo,nome,valor,date,quantidade);
+			produto.setCategoria(cat);
 			
 			dao.atualizar(produto);
 			request.setAttribute("msg", "produto atualizado");
@@ -143,4 +158,18 @@ public class produtoServlet extends HttpServlet {
 		request.getRequestDispatcher("lista-produto.jsp").forward(request, response);
 		
 	}
+	
+	private void abrirFormCadastro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Categoria> categorias = catDAO.listar();
+		req.setAttribute("categorias", categorias);
+		req.getRequestDispatcher("cadastro-produto.jsp").forward(req, resp);
+		
+	}
+
+	
+	
+	
+	
+	
+	
 }

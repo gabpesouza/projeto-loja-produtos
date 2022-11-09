@@ -15,6 +15,7 @@ public class Produto implements Serializable {
 	private double valor;
 	private Date dataFabricacao;
 	private int quantidade;
+	private Categoria categoria;
 	
 	public Produto() {
 		
@@ -66,6 +67,14 @@ public class Produto implements Serializable {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	@Override

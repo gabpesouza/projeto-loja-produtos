@@ -36,6 +36,14 @@
 	    <label for="exampleInputPassword1" class="form-label">Quantidade</label>
 	    <input type="text" class="form-control" id="exampleInputPassword1" name="quantidade" value="${produto.quantidade }">
 	  </div>
+	   <div class="mb-3">
+	  	<label for="id-categoria" class="form-label">Categoria</label>
+	  	<select name="categoria" id="id-categoria" class="form-control">
+	  		<c:forEach items="${categorias }" var="cat">
+	  			<option value="${cat.codigo }">${cat.nome }</option>
+	  		</c:forEach>
+	  	</select>
+	  </div>
 	  
 	  <button type="submit" class="btn btn-primary">Salvar</button>
 	  <a class="btn btn-danger" href="produto?acao=listar" role="button">Cancelar</a>

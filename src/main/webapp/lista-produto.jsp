@@ -38,6 +38,7 @@
 				      <th scope="col">Valor</th>
 				      <th scope="col">Quantidade</th>
 				      <th scope="col">Data fabricacao</th>
+				      <th scope="col">Categoria</th>
 				      <th></th>
 				      <th></th>
 				    </tr>
@@ -49,6 +50,7 @@
 				      <td>${p.valor }</td>
 				      <td>${p.quantidade }</td>
 				      <td><fmt:formatDate value="${p.dataFabricacao }" pattern="dd/MM/yyyy"/></td>
+				      <td>${p.categoria.nome }</td>
 				      <td>
 				      <c:url value="produto" var="link">
 				      	<c:param name="acao" value="editar"/>
