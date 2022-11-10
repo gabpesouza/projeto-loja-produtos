@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,33 +28,42 @@
           <a class="nav-link" href="produto?acao=listar">Produtos</a>
         </li>
        </ul>
-       
+       		
+       	   <c:if test="${not empty user }">
+	       		<span class="navbar-text">
+	       		${user }
+	       		<a href="login" class="btn btn-outline-primary my-2 my-sm-0">Sair</a>
+	       		</span>
+       	  </c:if>
        
      
     </div>
   </div>
 </nav>
 
-
-	<span class="navbar-text text-danger" style="margin-right:10px">
-		${erro }
-	</span>
-
-	<div class="container">
-		 <form class="form-signin" action="login" method="post">
-		   
-		      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		      <label for="inputEmail" class="sr-only">Email address</label>
-		      <input type="email" id="inputEmail" class="form-control mb-3" placeholder="Email address" required autofocus>
-		      <label for="inputPassword" class="sr-only">Password</label>
-		      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-		     
-		      <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
-		      
-    </form>
 	
 	
-	</div>
+	<c:if test="${empty user }">
+		<span class="navbar-text text-danger" style="margin-right:10px">
+			${erro }
+		</span>
+	
+		<div class="container">
+			 <form class="form-signin" action="login" method="post">
+			   
+			      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+			      <label for="inputEmail" class="sr-only">Email address</label>
+			      <input type="email" id="inputEmail" class="form-control mb-3" name="email" placeholder="Email address" required autofocus>
+			      <label for="inputPassword" class="sr-only">Password</label>
+			      <input type="password" id="inputPassword" class="form-control" name="senha" placeholder="Password" required>
+			     
+			      <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
+			      
+	    </form>
+		
+		
+		</div>
+	</c:if>
 
 
 <%@ include file="footer.jsp" %>
